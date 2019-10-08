@@ -1,16 +1,24 @@
 pipeline{
     agent any
+    tools{
+        maven 'local_maven'
+    }
     stages{
-        stage('Init'){
+        stage('build'){
             steps{
-                echo 'init start...'
+                sh 'mvn clean package'
+            }
+            post{
+                success{
+                    echo '构建成功，开始存档'
+                    archiveArtifacts artifacts:'**/target/*.war'
+                }
             }
         }
-        stage('Build'){
+        stage('Depoly to staging'){
             steps{
-                echo 'Building ......'
+                build job:'maven-war-deploy'
             }
         }
-
     }
 }

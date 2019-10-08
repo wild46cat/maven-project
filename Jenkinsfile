@@ -7,10 +7,6 @@ pipeline{
         stage('build'){
             steps{
                 sh 'mvn clean package'
-            }
-        }
-        stage('Depoly to docker'){
-            steps{
                 sh '/usr/local/bin/docker build . -t tomcatwebapp:${env.BUILD_ID}'
             }
         }

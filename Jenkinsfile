@@ -11,7 +11,7 @@ pipeline{
         }
         stage('Depoly to docker'){
             steps{
-                sh 'docker build . -t tomcatwebapp:${env.BUILD_ID}'
+                sh '/usr/local/bin/docker build . -t tomcatwebapp:${env.BUILD_ID}'
             }
         }
     }

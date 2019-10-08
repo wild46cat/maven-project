@@ -8,16 +8,10 @@ pipeline{
             steps{
                 sh 'mvn clean package'
             }
-            post{
-                success{
-                    echo '构建成功，开始存档'
-                    archiveArtifacts artifacts:'**/target/*.war'
-                }
-            }
         }
-        stage('Depoly to staging'){
+        stage('Depoly to docker'){
             steps{
-                build job:'maven-war-deploy'
+                sh 'docker build . -t tomcatwebapp:${env.BUILD_ID}'
             }
         }
     }
